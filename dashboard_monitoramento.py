@@ -135,7 +135,7 @@ def inject_css():
             background: #111114; border-right: 1px solid #2A2A32;
         }
         .styled-table {
-            width: 100%%; border-collapse: collapse;
+            width: 100%; border-collapse: collapse;
             background: #151518; border-radius: 12px; overflow: hidden;
             border: 1px solid #2A2A32;
         }
@@ -440,13 +440,19 @@ def _layout(fig, title="", height=380):
         legend=dict(font=dict(color=COLORS["text_muted"], size=11)),
     )
     return fig
+    
+
+def hex_to_rgba(hex_color, alpha=0.35):
+    hex_color = hex_color.lstrip("#")
+    r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
+    return "rgba(" + str(r) + "," + str(g) + "," + str(b) + "," + str(alpha) + ")"
 
 
 def plot_analistas_bar(df_a):
     if df_a.empty:
         return go.Figure()
     colors = [ANALISTA_COLORS.get(a, COLORS["amber"]) for a in df_a["Analista"]]
-    dim = [c + "59" for c in colors]
+    dim = [hex_to_rgba(c, 0.35) for c in colors]
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=df_a["Analista"], y=df_a["Jogadores_Obs"], name="Jogadores Obs.",
@@ -480,7 +486,7 @@ def plot_analistas_radar(df_a):
         fig.add_trace(go.Scatterpolar(
             r=vals, theta=cats + [cats[0]], name=nome,
             line=dict(color=color, width=2),
-            fill="toself", fillcolor=color + "14",
+            fill="toself", fillcolor=hex_to_rgba(color, 0.08),
         ))
     fig.update_layout(
         polar=dict(
