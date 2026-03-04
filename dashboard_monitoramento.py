@@ -10,6 +10,7 @@ import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 from datetime import datetime
+import urllib.parse 
 
 # ============================================================================
 # CONFIGURACAO
@@ -183,11 +184,12 @@ def inject_css():
 
 @st.cache_data(ttl=300)
 def load_sheet(sheet_name):
+    encoded = urllib.parse.quote(sheet_name)
     url = (
         "https://docs.google.com/spreadsheets/d/"
         + SHEET_ID
         + "/gviz/tq?tqx=out:csv&sheet="
-        + sheet_name.replace(" ", "%20")
+        + encoded
     )
     try:
         return pd.read_csv(url)
