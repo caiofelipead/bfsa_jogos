@@ -18,7 +18,7 @@ import urllib.parse
 
 st.set_page_config(
     page_title="Monitoramento de Jogos | Botafogo FSA",
-    page_icon="⚽",
+    page_icon="https://www.ogol.com.br/img/logos/equipas/3154_imgbank_1685113109.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
