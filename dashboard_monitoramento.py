@@ -11,6 +11,15 @@ import plotly.graph_objects as go
 import streamlit as st
 from datetime import datetime
 import urllib.parse 
+import requests
+from pathlib import Path
+
+LOGO_PATH = Path("assets/logo_botafogo.png")
+
+if not LOGO_PATH.exists():
+    LOGO_PATH.parent.mkdir(parents=True, exist_ok=True)
+    r = requests.get("https://www.ogol.com.br/img/logos/equipas/3154_imgbank_1685113109.png")
+    LOGO_PATH.write_bytes(r.content)
 
 # ============================================================================
 # CONFIGURACAO
@@ -18,7 +27,7 @@ import urllib.parse
 
 st.set_page_config(
     page_title="Monitoramento de Jogos | Botafogo FSA",
-    page_icon="https://www.ogol.com.br/img/logos/equipas/3154_imgbank_1685113109.png",
+    page_icon=str(LOGO_PATH),
     layout="wide",
     initial_sidebar_state="expanded",
 )
